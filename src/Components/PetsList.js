@@ -1,10 +1,25 @@
-import pets from "../petsData";
+import petsData from "../petsData";
 import PetItem from "./PetItem";
 import React, { useState } from "react";
 
 function PetsList() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
+  const [pets, setPets] = useState(petsData);
+
+  const handleAdopt = (petId) =>
+    setPets(pets.filter((pet) => pet.id !== petId));
+
+  //the function in line 10 works exactly like the one below
+
+  //check the following !!!
+  // function handleAdopt(petId) {
+  //   let petidList = pets.map((pet) => pet.id);
+  //   let index = petidList.indexOf(petId);
+  //   let arr = pets;
+  //   setPets(arr.splice(index, 1));
+  // }
+
   // if(pets.includes(query)){}
   // const petlistf=pets.filter((pet)=>)
   // pets.forEach((pet) => {
@@ -25,7 +40,8 @@ function PetsList() {
         pet.name.toLowerCase().includes(query.toLowerCase()) &&
         pet.type.includes(type)
     )
-    .map((pet) => <PetItem pet={pet} key={pet.id} />);
+    .map((pet) => <PetItem pet={pet} key={pet.id} handleAdopt={handleAdopt} />);
+  // in the line above we passed the method handleAdopt =>>> handleAdopt={handleAdopt}
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
@@ -69,3 +85,4 @@ function PetsList() {
 }
 
 export default PetsList;
+// export { handleAdopt, PetsList };
